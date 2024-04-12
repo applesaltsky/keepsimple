@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>keep simple and carry on</title>
+    <style>
+        body {
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            padding:0;
+            margin:0;
+            font-size:small;
+        }
+        a {            
+            text-decoration:none;
+        }
+        #main-index-category {
+            color:white;
+            background-color:black;
+            display:flex;      
+        }       
+        .main-item-category {
+            margin-right:10px;
+        }
+        .main-link-category:visited{
+            color:white;
+        }
+        .main-link-category:hover{
+            color:orange;
+        }        
+        #main-index-content-title {
+            border-style:solid;
+        }
+        .main-link-content-title {
+            color:black;
+        }
+        .main-item-content-title:hover {
+            color:orange;
+        }
+        .main-link-content-title:visited {
+            color:black;
+        }        
+    </style>
+
+</head>
+<body>
+    <div>
+        <div id = "main-index-category">
+            {% for idx, (id_category, category) in enumerate(zip(list_id_category, list_category)) %}
+                {% if idx == 0 %}
+                <div class = "main-item-caterogy"><a class="main-link-category" href="/{{id_category}}/0"> {{category}} </a></div>
+                {% else %}
+                <div class = "main-item-caterogy">&nbsp|&nbsp</div>
+                <div class = "main-item-caterogy"><a class="main-link-category" href="/{{id_category}}/0"> {{category}} </a></div>
+                {% endif %}
+            {% endfor %}
+
+        </div>
+        <div id = "main-index-content-title">
+            {% for id_content, title_content in zip(list_id_content,list_title_content) %}
+                <div class = "main-item-content-title"><a class="main-link-content-title" href="/{{this_id_category}}/{{id_content}}">{{id_content}} | {{title_content}}</a></div>
+            {% endfor %}
+        </div>
+    </div>
+    <div id = "main-view-content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</body>
+
+</html>
