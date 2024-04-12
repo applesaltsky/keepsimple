@@ -6,10 +6,12 @@ from fastapi.responses import RedirectResponse
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pathlib import Path
 from IndexConnector import IndexConnector
-
+import base64
+import os
 
 MAIN_PY_PATH = Path(__file__)
 TEMPLATES_PATH = Path(MAIN_PY_PATH.parent,'templates')
+STATIC_PATH = Path(MAIN_PY_PATH.parent,'static')
 
 app = FastAPI()
 env = Environment(loader = FileSystemLoader(TEMPLATES_PATH), autoescape=select_autoescape())
@@ -38,6 +40,17 @@ def render(a,b):
     #get title list
     list_id_content, list_title_content, list_html_content = index_db.get_list_content(id_category)
 
+    #get static image binary
+    path_static_images = Path(STATIC_PATH,'image',str(id_category),str(id_content))
+    list_base64_images = []
+    if os.path.exists(path_static_images):
+        for image in os.listdir(path_static_images):
+            with open(Path(path_static_images,image),'rb') as f:
+                binary = f.read()
+            base64Image = base64.b64encode(binary).decode('ascii')
+            list_base64_images.append(base64Image)
+    
+    #render templates
     templates = env.get_template(f'content/{id_category}_{category}/{id_content}_{title_content}/{html_content}')
     text = templates.render({
                             'list_id_category':list_id_category,
@@ -47,6 +60,7 @@ def render(a,b):
                              'title':title_content,
                              'this_id_category':id_category,
                              'this_id_content':id_content,
+                             'list_base64_images':list_base64_images,
                              'zip':zip,
                              'enumerate':enumerate
                              })
