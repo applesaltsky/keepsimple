@@ -46,6 +46,7 @@ def render(a,b):
                              'list_title_content':list_title_content,
                              'title':title_content,
                              'this_id_category':id_category,
+                             'this_id_content':id_content,
                              'zip':zip,
                              'enumerate':enumerate
                              })

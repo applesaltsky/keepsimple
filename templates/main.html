@@ -1,27 +1,29 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko-KR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>keep simple and carry on</title>
     <style>
         body {
-            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
             padding:0;
             margin:0;
-            font-size:small;
+            font-size:smaller;
+            
         }
         a {            
             text-decoration:none;
         }
+    
         #main-index-category {
+            padding-top:5px;
+            padding-left:5px;
+            padding-bottom:2px;
             color:white;
             background-color:black;
             display:flex;      
         }       
-        .main-item-category {
-            margin-right:10px;
-        }
         .main-link-category:visited{
             color:white;
         }
@@ -30,43 +32,50 @@
         }        
         #main-index-content-title {
             border-style:solid;
+            padding-left:5px;
+            width:100vw;
+            margin-top:2px;
+            margin-bottom:2px;
         }
-        .main-link-content-title {
-            color:black;
+        #main-view {
+            margin-left:5px;
         }
-        .main-item-content-title:hover {
-            color:orange;
-        }
-        .main-link-content-title:visited {
-            color:black;
-        }        
     </style>
 
 </head>
 <body>
-    <div>
-        <div id = "main-index-category">
-            {% for idx, (id_category, category) in enumerate(zip(list_id_category, list_category)) %}
-                {% if idx == 0 %}
-                <div class = "main-item-caterogy"><a class="main-link-category" href="/{{id_category}}/0"> {{category}} </a></div>
-                {% else %}
-                <div class = "main-item-caterogy">&nbsp|&nbsp</div>
-                <div class = "main-item-caterogy"><a class="main-link-category" href="/{{id_category}}/0"> {{category}} </a></div>
-                {% endif %}
-            {% endfor %}
-
+    <div id="main">
+        <div id="main-index">
+            <div id = "main-index-category">
+                {% for idx, (id_category, category) in enumerate(zip(list_id_category, list_category)) %}
+                    {% if idx == 0 %}
+                        <div class = "main-item-caterogy"><a class="main-link-category" href="/{{id_category}}/0"> {{category}} </a></div>
+                    {% else %}
+                        <div class = "main-item-caterogy">&nbsp|&nbsp</div>
+                        <div class = "main-item-caterogy"><a class="main-link-category" href="/{{id_category}}/0"> {{category}} </a></div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <select size=4 onchange="window.open(value,'_self');" id = "main-index-content-title">
+                {% for id_content, title_content in zip(list_id_content,list_title_content) %}
+                    {% if id_content == this_id_content %}
+                        <option class="main-link-content-title" value="/{{this_id_category}}/{{id_content}}" selected>{{id_content}} | {{title_content}}</option>
+                    {% else %}
+                        <option class="main-link-content-title" value="/{{this_id_category}}/{{id_content}}">{{id_content}} | {{title_content}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
         </div>
-        <div id = "main-index-content-title">
-            {% for id_content, title_content in zip(list_id_content,list_title_content) %}
-                <div class = "main-item-content-title"><a class="main-link-content-title" href="/{{this_id_category}}/{{id_content}}">{{id_content}} | {{title_content}}</a></div>
-            {% endfor %}
+        <div id = "main-view">
+            <div id = "main-view-content">
+                {% block content %}
+                {% endblock %}
+            </div>
+            <div id= "main-view-comment">
+
+            </div>
         </div>
     </div>
-    <div id = "main-view-content">
-        {% block content %}
-        {% endblock %}
-    </div>
-
 </body>
 
 </html>
