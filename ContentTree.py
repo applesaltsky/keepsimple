@@ -16,10 +16,10 @@ class ContentTree:
         id = 0
 
         list_category = os.listdir(self.path_content)
-        for category in list_category:
+        for category in list_category.sort(key=lambda item:item.split('_')[0]):
             path_category = Path(self.path_content,category)
             list_content = os.listdir(path_category)
-            for title in list_content:
+            for title in list_content.sort(key=lambda item:item.split('_')[0]):
                 path_content = Path(self.path_content,category,title)
                 html_content = os.listdir(path_content)[0]
                 newRow = {'id':int(id), 

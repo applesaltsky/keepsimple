@@ -50,7 +50,8 @@ def render(a,b):
                 binary = f.read()
             base64Image = base64.b64encode(binary).decode('ascii')
             list_base64_images.append(base64Image)
-    
+    list_base64_images = list_base64_images.sort()
+
     #render templates
     templates = env.get_template(f'content/{id_category}_{category}/{id_content}_{title_content}/{html_content}')
     text = templates.render({
