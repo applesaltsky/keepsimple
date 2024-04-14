@@ -17,7 +17,6 @@ class ContentTree:
 
         list_category = os.listdir(self.path_content)
         list_category.sort(key=lambda item:item.split('_')[0])
-        print(list_category)
         for category in list_category:
             path_category = Path(self.path_content,category)
             list_content = os.listdir(path_category)
