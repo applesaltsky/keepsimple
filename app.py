@@ -21,7 +21,12 @@ index_db = IndexConnector()
 
 @app.get("/")
 def root():
-    return RedirectResponse('/0/0')
+    try:
+        return RedirectResponse('/0/0')
+    except Exception as E:
+        text = E
+        headers = {'Content-type':'text/plain'}
+        return Response(text,status_code=200,headers=headers)
 
 
 @app.get("/{a:int}/{b:int}")
