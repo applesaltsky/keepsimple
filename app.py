@@ -1,7 +1,9 @@
 #uvicorn main:app --reload -> on window
 #gunicorn -w main:app -> on linux
 
-from flask import Flask, Response, redirect
+from fastapi import FastAPI, Response
+from fastapi.responses import RedirectResponse
+import uvicorn
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pathlib import Path
 from IndexConnector import IndexConnector
@@ -12,17 +14,17 @@ MAIN_PY_PATH = Path(__file__)
 TEMPLATES_PATH = Path(MAIN_PY_PATH.parent,'templates')
 STATIC_PATH = Path(MAIN_PY_PATH.parent,'static')
 
-app = Flask(__name__)
+app = FastAPI()
 env = Environment(loader = FileSystemLoader(TEMPLATES_PATH), autoescape=select_autoescape())
 index_db = IndexConnector()
 index_db.refresh()
 
-@app.route("/")
+@app.get("/")
 def root():
-    return redirect('/0/0')
+    return RedirectResponse('/0/0')
 
 
-@app.route("/<int:a>/<int:b>")
+@app.get("/{a:int}/{b:int}")
 def render(a,b):
     #get templates index from db
     index = index_db.read_row(id_category=a,id_content=b)  #{'id': 3, 'id_category': 1, 'category': '이 앱은 어떻게 만들었나', 'id_content': 2, 'title_content': 'JINJA2를 이용한 RENDERING', 'html_content': 'Jinja2.html'}
@@ -66,7 +68,7 @@ def render(a,b):
 
     
     headers = {'Content-type':'text/html'}
-    return Response(text,status=200,headers=headers)
+    return Response(text,status_code=200,headers=headers)
 
 if __name__ == '__main__':
-   app.run()
+   uvicorn.run(app,port=5000)
