@@ -26,50 +26,55 @@ def root():
 
 @app.get("/{a:int}/{b:int}")
 def render(a,b):
-    #get templates index from db
-    index = index_db.read_row(id_category=a,id_content=b)  #{'id': 3, 'id_category': 1, 'category': '이 앱은 어떻게 만들었나', 'id_content': 2, 'title_content': 'JINJA2를 이용한 RENDERING', 'html_content': 'Jinja2.html'}
-    id_category = index['id_category']
-    category = index['category']
-    id_content = index['id_content']
-    title_content = index['title_content']
-    html_content = index['html_content']
+    try:
+        #get templates index from db
+        index = index_db.read_row(id_category=a,id_content=b)  #{'id': 3, 'id_category': 1, 'category': '이 앱은 어떻게 만들었나', 'id_content': 2, 'title_content': 'JINJA2를 이용한 RENDERING', 'html_content': 'Jinja2.html'}
+        id_category = index['id_category']
+        category = index['category']
+        id_content = index['id_content']
+        title_content = index['title_content']
+        html_content = index['html_content']
 
 
-    #get category list
-    list_id_category, list_category = index_db.get_list_category()
+        #get category list
+        list_id_category, list_category = index_db.get_list_category()
 
-    #get title list
-    list_id_content, list_title_content, list_html_content = index_db.get_list_content(id_category)
+        #get title list
+        list_id_content, list_title_content, list_html_content = index_db.get_list_content(id_category)
 
-    #get static image binary
-    path_static_images = Path(STATIC_PATH,'image',str(id_category),str(id_content))
-    list_base64_images = []
-    if os.path.exists(path_static_images):
-        for image in os.listdir(path_static_images):
-            with open(Path(path_static_images,image),'rb') as f:
-                binary = f.read()
-            base64Image = base64.b64encode(binary).decode('ascii')
-            list_base64_images.append(base64Image)
-    list_base64_images = list_base64_images.sort()
+        #get static image binary
+        path_static_images = Path(STATIC_PATH,'image',str(id_category),str(id_content))
+        list_base64_images = []
+        if os.path.exists(path_static_images):
+            for image in os.listdir(path_static_images):
+                with open(Path(path_static_images,image),'rb') as f:
+                    binary = f.read()
+                base64Image = base64.b64encode(binary).decode('ascii')
+                list_base64_images.append(base64Image)
+        list_base64_images = list_base64_images.sort()
 
-    #render templates
-    templates = env.get_template(f'content/{id_category}_{category}/{id_content}_{title_content}/{html_content}')
-    text = templates.render({
-                            'list_id_category':list_id_category,
-                             'list_category':list_category,
-                             'list_id_content':list_id_content,
-                             'list_title_content':list_title_content,
-                             'title':title_content,
-                             'this_id_category':id_category,
-                             'this_id_content':id_content,
-                             'list_base64_images':list_base64_images,
-                             'zip':zip,
-                             'enumerate':enumerate
-                             })
+        #render templates
+        templates = env.get_template(f'content/{id_category}_{category}/{id_content}_{title_content}/{html_content}')
+        text = templates.render({
+                                'list_id_category':list_id_category,
+                                'list_category':list_category,
+                                'list_id_content':list_id_content,
+                                'list_title_content':list_title_content,
+                                'title':title_content,
+                                'this_id_category':id_category,
+                                'this_id_content':id_content,
+                                'list_base64_images':list_base64_images,
+                                'zip':zip,
+                                'enumerate':enumerate
+                                })
 
-    
-    headers = {'Content-type':'text/html'}
-    return Response(text,status_code=200,headers=headers)
+        
+        headers = {'Content-type':'text/html'}
+        return Response(text,status_code=200,headers=headers)
+    except Exception as E:
+        text = E
+        headers = {'Content-type':'text/plain'}
+        return Response(text,status_code=200,headers=headers)
 
 if __name__ == '__main__':
    index_db.refresh()
