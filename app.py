@@ -67,3 +67,6 @@ def render(a,b):
     
     headers = {'Content-type':'text/html'}
     return Response(text,status=200,headers=headers)
+
+if __name__ == '__main__':
+   app.run()
