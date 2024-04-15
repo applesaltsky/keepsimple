@@ -15,7 +15,7 @@ STATIC_PATH = Path(MAIN_PY_PATH.parent,'static')
 app = Flask(__name__)
 env = Environment(loader = FileSystemLoader(TEMPLATES_PATH), autoescape=select_autoescape())
 index_db = IndexConnector()
-index_db.refresh()
+
 
 @app.route("/")
 def root():
@@ -43,7 +43,9 @@ def render(a,b):
     path_static_images = Path(STATIC_PATH,'image',str(id_category),str(id_content))
     list_base64_images = []
     if os.path.exists(path_static_images):
-        for image in os.listdir(path_static_images):
+        list_img = os.listdir(path_static_images)
+        list_img.sort(key=lambda item:int(item.split('_')[0]))
+        for image in list_img:
             with open(Path(path_static_images,image),'rb') as f:
                 binary = f.read()
             base64Image = base64.b64encode(binary).decode('ascii')
@@ -69,4 +71,5 @@ def render(a,b):
     return Response(text,status=200,headers=headers)
 
 if __name__ == '__main__':
+   index_db.refresh()
    app.run()

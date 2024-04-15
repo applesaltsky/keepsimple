@@ -16,11 +16,11 @@ class ContentTree:
         id = 0
 
         list_category = os.listdir(self.path_content)
-        list_category.sort(key=lambda item:item.split('_')[0])
+        list_category.sort(key=lambda item:int(item.split('_')[0]))
         for category in list_category:
             path_category = Path(self.path_content,category)
             list_content = os.listdir(path_category)
-            list_content.sort(key=lambda item:item.split('_')[0])
+            list_content.sort(key=lambda item:int(item.split('_')[0]))
             for title in list_content:
                 path_content = Path(self.path_content,category,title)
                 html_content = os.listdir(path_content)[0]
