@@ -1,0 +1,62 @@
+{% extends "main.html" %}
+
+{% block content %}
+    <div>title : {{title}}</div>
+    <br>
+    이런 멋진 블로그를 여러분들도 만들고 싶으시겠죠.
+    <br>
+    우선 이 블로그를 배포하는 법을 아무 것도 모르는 우리 팀 신입 사원한테 가르친다는 가정하에 설명 드리겠습니다.
+    <br>
+    <br>
+    준비물이 필요합니다. 아주 많긴한데, 한 번 깔아두면 평생 쓸 툴입니다.
+    <br>
+    <br>
+    <img src="data:image/png;base64, {{list_base64_images[0]}}" width="500px"/>
+    <br>
+    준비물 1 : 컴퓨터에 python이 설치되어 있으셔야 합니다. 서버를 python으로 돌릴 거예요. (<a href="https://www.python.org" target="_blank">https://www.python.org</a>)
+    <br>
+    <br>
+    <img src="data:image/png;base64, {{list_base64_images[1]}}" width="1300px"/>
+    <br>
+    <img src="data:image/png;base64, {{list_base64_images[2]}}" width="500px"/>
+    <br>
+    python을 설치하셨으면, 환경변수 들어가서 path에 python.exe가 있는 경로를 입력해주세요. 
+    <br>
+    윈도우 유저라면, 대충 이런 경로일 겁니다. C:\Users\User\AppData\Local\Programs\Python\Python311
+    <br>
+    <img src="data:image/png;base64, {{list_base64_images[3]}}" width="500px"/>
+    <br>
+    정상적으로 설치 되였다면, cmd를 열어서 python --version 입력하셨을 때 저렇게 파이선 버전이 나올 거예요.
+    <br>
+    <br>
+    <img src="data:image/png;base64, {{list_base64_images[4]}}" width="500px"/>
+    <br>
+    준비물 2 : git을 다운 받고 설치해주세요. git은 소스코드를 사진찍는 프로그램입니다. 
+    <br>
+    보통, 소스코드를 서버에 업로드하거나 할 때, 파일을 그대로 보내기보단, 파일을 git으로 사진 찍어서 가릴 건 가리고 보정할 건 보정해서 보냅니다. 
+    <br>
+    여러분 이력서 사진을 생각해보세요. 진실은 건강에 해롭습니다.
+    <br>
+    <br>
+    <img src="data:image/png;base64, {{list_base64_images[5]}}" width="300px"/>
+    <br>
+    준비물 3 : github에 가입해주세요. (<a href="https://github.com" target="_blank">https://github.com</a>)
+    <br>
+    프로그래밍 업계의 인스타그램 같은 곳입니다. git이 사진 찍는 프로그램이랬잖아요. 인싸들이 사진을 인스타그램에 올리듯이, 프로그래머는 git을 github에 올립니다.
+    <br>
+    저희는 코드를 git으로 사진 찍어서, github에 올리고, azure는 github에 올려진 코드를 읽어서 서버를 구축해줄 거예요.
+    <br>
+    <br>
+    <img src="data:image/png;base64, {{list_base64_images[6]}}" width="500px"/>
+    <br>
+    준비물 4 : github desktop을 설치해주세요. (<a href="https://desktop.github.com",target="_blank">https://desktop.github.com</a>)
+    <br>
+    <img src="data:image/png;base64, {{list_base64_images[7]}}" width="500px"/>
+    <br>
+    git은 원래 git bash라는 멍멍 같은 프로그램으로 다뤄야 하는데, github desktop을 쓰면 훨씬 편하게 git을 github에 업로드 할 수 있습니다.
+    <br>
+
+
+
+
+{% endblock %}
