@@ -84,5 +84,3 @@ def render(a,b):
         headers = {'Content-type':'text/plain'}
         return Response(text,status_code=200,headers=headers)
 
-if __name__ == '__main__':
-   uvicorn.run(app,port=5000)
