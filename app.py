@@ -17,6 +17,7 @@ STATIC_PATH = Path(MAIN_PY_PATH.parent,'static')
 app = FastAPI()
 env = Environment(loader = FileSystemLoader(TEMPLATES_PATH), autoescape=select_autoescape())
 index_db = IndexConnector()
+index_db.refresh()
 
 
 @app.get("/")
@@ -84,5 +85,4 @@ def render(a,b):
         return Response(text,status_code=200,headers=headers)
 
 if __name__ == '__main__':
-   index_db.refresh()
    uvicorn.run(app,port=5000)
