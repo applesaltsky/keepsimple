@@ -1,5 +1,5 @@
 #uvicorn main:app --reload -> on window
-#gunicorn -w main:app -> on linux
+#gunicorn -w 4 -k uvicorn.workers.UvicornWorker app:app -> on linux
 
 from fastapi import FastAPI, Response
 from fastapi.responses import RedirectResponse
