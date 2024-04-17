@@ -7,7 +7,7 @@ import uvicorn
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pathlib import Path
 from IndexConnector import IndexConnector
-import base64
+import base64  
 import os
 
 MAIN_PY_PATH = Path(__file__)
